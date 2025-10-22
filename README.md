@@ -35,13 +35,6 @@ AI와 함께 만들어가는 창의적인 이야기의 숲을 만나보세요 �
 
 ## 🗂️ 폴더 구조
 
+<img width="358" height="241" alt="image" src="https://github.com/user-attachments/assets/2a25c415-e831-4b98-b692-fdc8d3011e15" />
 
-storybooks/
-├── index.html # 메인 페이지
-├── css/
-│ └── style.css # 사이트 전체 스타일
-├── js/
-│ └── main.js # 전시관 카드 및 모달 기능
-└── assets/
-└── logo.png # COALAB 로고
 
