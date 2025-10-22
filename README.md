@@ -18,7 +18,7 @@ AI와 함께 만들어가는 창의적인 이야기의 숲을 만나보세요 �
 - **AI 시나리오 도구** : ChatGPT, Gemini  
 - **동화책 예시**  
   - 📘 [받칫고리의 밤 (The Night of the Button Box)](https://buttonbox.my.canva.site/)  
-  - 🐶 [봄이의 물속 친구 (Bom-i, the Friend in the Water)](https://coalab.my.canva.site/presentation-bom-i-the-friend-in-the-water)
+  - 
 
 ---
 
