@@ -1,0 +1,159 @@
+/* =========================
+   기본 설정
+========================= */
+body {
+  font-family: 'Pretendard', sans-serif;
+  background-color: #FFFFFF; /* ✨ 전체 흰색 배경 */
+  margin: 0;
+  color: #2E4A3D; /* 기본 글자색 (카키 톤) */
+}
+
+/* =========================
+   헤더 영역
+========================= */
+header {
+  text-align: center;
+  background: #FFFFFF; /* 흰색으로 통일 */
+  padding: 2rem 1rem;
+  border-bottom: 1px solid #E0E0E0; /* 은은한 회색 구분선 */
+}
+
+header h1 {
+  font-size: 2rem;
+  margin: 0.3rem 0;
+  color: #2E4A3D;
+}
+
+header p {
+  color: #3E6651;
+  margin-top: 0.5rem;
+}
+
+/* 로고 + 제목 정렬 */
+.title-wrap {
+  display: flex;
+  align-items: center;       /* 수직 중앙 정렬 */
+  justify-content: center;   /* 가운데 정렬 */
+  gap: 10px;                 /* 로고와 글자 간격 */
+}
+
+.logo {
+  width: 60px;               /* 로고 크기 */
+  height: auto;
+  margin-bottom: 0;
+}
+
+/* =========================
+   카드 전시관 (gallery)
+========================= */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.book-card {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* ✨ 그림자 강조 */
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.book-card img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.book-card h3 {
+  margin: 0.8rem 0 0.3rem;
+  color: #2E4A3D;
+}
+
+.book-card p {
+  margin-bottom: 1rem;
+  color: #3E6651;
+  font-size: 0.9rem;
+}
+
+/* =========================
+   모달 팝업
+========================= */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(40, 70, 50, 0.6);
+}
+
+.modal-content {
+  background-color: #FFFFFF;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 20px;
+  width: 80%;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(40, 100, 60, 0.3);
+}
+
+.modal-content img {
+  width: 70%;
+  border-radius: 10px;
+}
+
+.close {
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #5EB883;
+}
+
+.close:hover {
+  color: #2E4A3D;
+}
+
+/* =========================
+   버튼
+========================= */
+.button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 10px 20px;
+  background: #6FCF97; /* 민트그린 포인트 */
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.button:hover {
+  background: #5EB883;
+}
+
+/* =========================
+   푸터 영역
+========================= */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #FFFFFF; /* ✨ 흰색으로 통일 */
+  color: #666;
+  border-top: 1px solid #E0E0E0;
+}
