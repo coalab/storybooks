@@ -1,43 +1,256 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>COALAB AI 동화책 전시관</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COALAB AI 창의 교실 포털</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;600;800&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: '#8FB996',
+                        beige: '#F7F3E9',
+                        warmPink: '#FFB7B2',
+                        earthy: '#6B5B52',
+                        softCream: '#FFFDF9'
+                    },
+                    fontFamily: {
+                        sans: ['"Gothic A1"', 'sans-serif'],
+                        hand: ['"Gaegu"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Gothic A1', sans-serif; background-color: #F7F3E9; color: #4A403A; }
+        .hand-text { font-family: 'Gaegu', cursive; }
+        .glass-card { background: #FFFDF9; border: 2px solid #E8E2D2; border-radius: 24px; }
+        .nav-link.active { background-color: #8FB996 !important; color: white !important; border-radius: 9999px; }
+        .btn-hover:hover { transform: scale(1.02); transition: all 0.3s ease; }
+        
+        input[type=range] { -webkit-appearance: none; background: transparent; }
+        input[type=range]::-webkit-slider-runnable-track { background: #E8E2D2; height: 8px; border-radius: 10px; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: #FFB7B2; margin-top: -6px; cursor: pointer; border: 2px solid white; }
+
+        .tab-content { transition: opacity 0.3s ease; }
+        .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
-<body>
+<body class="antialiased">
 
-<header>
-  <div class="title-wrap">
-    <img src="assets/logo.png" alt="COALAB 로고" class="logo">
-    <h1>COALAB AI 동화책 전시관</h1>
-  </div>
-  <p>AI와 함께 만들어가는 이야기의 숲</p>
-</header>
+    <!-- Navigation -->
+    <nav class="max-w-6xl mx-auto px-4 py-6">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <img src="assets/logo.png" alt="COALAB" class="h-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="hidden bg-sage p-2 rounded-lg text-white font-bold">COALAB</div>
+                <h1 class="text-2xl font-extrabold tracking-tight text-earthy">COALAB <span class="text-sage font-hand text-3xl">창의교실</span></h1>
+            </div>
+            <div class="flex flex-wrap justify-center bg-white/50 backdrop-blur p-1 rounded-full border-2 border-beige shadow-inner space-x-1">
+                <button id="nav-dashboard" onclick="switchTab('dashboard')" class="nav-link px-5 py-2 text-sm font-bold text-earthy transition active">홈</button>
+                <button id="nav-lessons" onclick="switchTab('lessons')" class="nav-link px-5 py-2 text-sm font-bold text-earthy transition">수업 설계</button>
+                <button id="nav-evaluation" onclick="switchTab('evaluation')" class="nav-link px-5 py-2 text-sm font-bold text-earthy transition">성장 평가</button>
+                <a href="gallery.html" class="px-5 py-2 text-sm font-bold text-warmPink hover:text-earthy transition flex items-center gap-1">
+                    <i class="fas fa-book-open"></i> AI 동화책 전시관
+                </a>
+            </div>
+        </div>
+    </nav>
 
+    <main class="max-w-6xl mx-auto px-4 pb-20">
 
-  <main>
-    <section id="gallery" class="gallery"></section>
-  </main>
+        <!-- Tab: Dashboard -->
+        <div id="tab-dashboard" class="tab-content animate-fade-in">
+            <div class="bg-gradient-to-r from-beige via-white to-pink-50 p-10 rounded-[40px] border-2 border-white shadow-sm mb-10 flex flex-col md:flex-row items-center gap-10">
+                <div class="md:w-3/5 text-center md:text-left">
+                    <span class="inline-block bg-warmPink/20 text-warmPink font-bold px-4 py-1 rounded-full text-xs mb-4 uppercase tracking-wider">Club Business Resources</span>
+                    <h2 class="text-4xl font-extrabold text-earthy mb-4 leading-tight">AI와 함께 만들어가는<br><span class="text-sage">따뜻한 이야기의 숲</span></h2>
+                    <p class="text-earthy/70 text-lg hand-text text-2xl mb-8">COALAB은 기술을 통해 아이들의 무한한 상상력을 현실로 만듭니다.</p>
+                    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                        <button onclick="switchTab('lessons')" class="bg-sage text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-sage/20 btn-hover">수업 가이드 보기</button>
+                        <a href="gallery.html" class="bg-white border-2 border-warmPink text-warmPink px-8 py-4 rounded-2xl font-bold shadow-sm btn-hover flex items-center gap-2">
+                            <i class="fas fa-palette"></i> 동화책 전시관 입장
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-2/5 flex justify-center">
+                    <div class="relative">
+                        <div class="w-56 h-56 bg-warmPink/20 rounded-full animate-pulse absolute -top-6 -left-6"></div>
+                        <div class="w-56 h-56 bg-white rounded-[40px] rotate-6 flex items-center justify-center shadow-2xl border-4 border-beige overflow-hidden">
+                           <i class="fas fa-magic text-7xl text-sage"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  <!-- 모달 팝업 -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <img id="modal-cover" src="" alt="책 표지">
-      <h2 id="modal-title"></h2>
-      <p id="modal-desc"></p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 text-center font-bold">
+                <div class="glass-card p-6"><div class="text-sage text-3xl mb-1">120+</div><div class="text-xs text-earthy/60">창작된 동화책</div></div>
+                <div class="glass-card p-6 border-warmPink/30"><div class="text-warmPink text-3xl mb-1">15개</div><div class="text-xs text-earthy/60">참여 학급</div></div>
+                <div class="glass-card p-6 border-sage/30"><div class="text-earthy text-3xl mb-1">98%</div><div class="text-xs text-earthy/60">수업 만족도</div></div>
+            </div>
+        </div>
 
-      <a id="modal-link" href="#" class="button" aria-label="Canva로 열기">📖 Canva로 열기</a>
-    </div>
-  </div>
+        <!-- Tab: Lessons -->
+        <div id="tab-lessons" class="tab-content hidden animate-fade-in">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-earthy mb-2">교실 수업 레시피</h2>
+                <div class="mt-8 inline-flex bg-white p-1.5 rounded-2xl shadow-sm border border-beige">
+                    <button onclick="toggleGrade('elem')" id="btn-elem" class="px-8 py-2 rounded-xl font-bold transition-all bg-sage text-white shadow-md">초등 과정</button>
+                    <button onclick="toggleGrade('mid')" id="btn-mid" class="px-8 py-2 rounded-xl font-bold transition-all text-earthy/50">중등 과정</button>
+                </div>
+            </div>
+            <div id="lesson-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 기본 로드 시 보일 내용 (정적 렌더링) -->
+            </div>
+        </div>
 
-  <footer>
-    <p>© 2025 COALAB Lifelong Education | AI Storybook Project</p>
-  </footer>
+        <!-- Tab: Evaluation -->
+        <div id="tab-evaluation" class="tab-content hidden animate-fade-in">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12"><h2 class="text-3xl font-extrabold text-earthy">아이들의 마음 성장표</h2></div>
+                <div class="glass-card p-10 flex flex-col md:flex-row gap-12 items-center">
+                    <div class="md:w-1/2">
+                        <div style="height:300px; width:100%"><canvas id="evalRadarChart"></canvas></div>
+                    </div>
+                    <div class="md:w-1/2 space-y-6">
+                        <div>
+                            <div class="flex justify-between text-sm font-bold mb-2"><span>기획력</span><span id="val0">80</span></div>
+                            <input type="range" min="0" max="100" value="80" class="w-full" oninput="updateEvalChart(0, this.value)">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm font-bold mb-2"><span>AI 활용능력</span><span id="val1">70</span></div>
+                            <input type="range" min="0" max="100" value="70" class="w-full" oninput="updateEvalChart(1, this.value)">
+                        </div>
+                        <button class="w-full bg-earthy text-white py-4 rounded-2xl font-bold btn-hover">보고서 생성</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <script src="./css/js/main.js"></script>
+    </main>
+
+    <footer class="bg-white/50 py-12 border-t-2 border-beige text-center">
+        <p class="hand-text text-2xl text-earthy mb-2">"아이들의 상상이 세상에서 가장 따뜻한 이야기가 됩니다."</p>
+        <p class="text-xs text-earthy/40 font-bold uppercase">© 2025 COALAB Lifelong Education | AI Storybook Project</p>
+    </footer>
+
+    <script>
+        const lessonData = {
+            elem: [
+                { title: "숲속 동물 친구들", unit: "1~2학년", icon: "fa-frog", color: "bg-sage", desc: "AI로 동물을 그려보고 말풍선을 채워요." },
+                { title: "나의 미래 일기", unit: "3~4학년", icon: "fa-rocket", color: "bg-warmPink", desc: "꿈꾸는 미래의 모습을 AI가 그려줍니다." },
+                { title: "우리 동네 전설 탐험", unit: "5~6학년", icon: "fa-ghost", color: "bg-earthy", desc: "전설을 각색해 한 권의 동화로 만들어요." }
+            ],
+            mid: [
+                { title: "셰익스피어 인 AI", unit: "문학 융합", icon: "fa-feather-pointed", color: "bg-earthy", desc: "고전 비극을 현대적 시각으로 AI와 재창작." },
+                { title: "디지털 초상권과 윤리", unit: "정보/사회", icon: "fa-user-shield", color: "bg-sage", desc: "생성 이미지의 권리와 책임에 대해 배워요." }
+            ]
+        };
+
+        let evalChart;
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`tab-${tabId}`);
+            if(target) target.classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            if(tabId === 'evaluation') setTimeout(initEvalChart, 100);
+            if(tabId === 'lessons') toggleGrade('elem');
+        }
+
+        function toggleGrade(level) {
+            const grid = document.getElementById('lesson-grid');
+            if(!grid) return;
+            
+            const btnElem = document.getElementById('btn-elem');
+            const btnMid = document.getElementById('btn-mid');
+
+            if(level === 'elem') {
+                btnElem.classList.add('bg-sage', 'text-white', 'shadow-md');
+                btnElem.classList.remove('text-earthy/50');
+                btnMid.classList.remove('bg-sage', 'text-white', 'shadow-md');
+                btnMid.classList.add('text-earthy/50');
+            } else {
+                btnMid.classList.add('bg-sage', 'text-white', 'shadow-md');
+                btnMid.classList.remove('text-earthy/50');
+                btnElem.classList.remove('bg-sage', 'text-white', 'shadow-md');
+                btnElem.classList.add('text-earthy/50');
+            }
+
+            grid.innerHTML = lessonData[level].map(lesson => `
+                <div class="glass-card p-8 btn-hover cursor-pointer border-2 border-beige">
+                    <div class="w-16 h-16 ${lesson.color} text-white rounded-3xl flex items-center justify-center text-3xl mb-6 shadow-lg">
+                        <i class="fas ${lesson.icon}"></i>
+                    </div>
+                    <span class="text-xs font-bold ${lesson.color.replace('bg-', 'text-')} bg-white px-3 py-1 rounded-full border border-beige shadow-sm">${lesson.unit}</span>
+                    <h3 class="text-2xl font-bold text-earthy mt-4 mb-2 hand-text">${lesson.title}</h3>
+                    <p class="text-sm text-earthy/60 leading-relaxed">${lesson.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        function initEvalChart() {
+            const canvas = document.getElementById('evalRadarChart');
+            if(!canvas || evalChart) return;
+            
+            const ctx = canvas.getContext('2d');
+            evalChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['기획력', '질문능력', '윤리의식', '예술표현'],
+                    datasets: [{
+                        data: [80, 70, 90, 65],
+                        backgroundColor: 'rgba(143, 185, 150, 0.4)',
+                        borderColor: '#8FB996',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#8FB996'
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { display: false } } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function updateEvalChart(index, value) {
+            if(evalChart) {
+                evalChart.data.datasets[0].data[index] = parseInt(value);
+                evalChart.update();
+                document.getElementById(`val${index}`).textContent = value;
+            }
+        }
+
+        // 초기 실행을 확실하게 보장
+        document.addEventListener('DOMContentLoaded', () => {
+            toggleGrade('elem');
+        });
+        
+        // window load도 백업으로 사용
+        window.onload = () => {
+            toggleGrade('elem');
+        };
+    </script>
 </body>
 </html>
