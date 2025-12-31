@@ -41,23 +41,43 @@
         .nav-link.active { background-color: #8FB996; color: white; border-radius: 9999px; }
         .btn-hover:hover { transform: scale(1.02); transition: all 0.3s ease; }
         
-        /* Custom range slider for warm palette */
+        /* 동화책 삽화 스타일링 - 보내주신 이미지 느낌 반영 */
+        .illustration-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fff, #fff9f9);
+            border: 8px solid white;
+            box-shadow: 0 10px 25px rgba(107, 91, 82, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .illustration-content {
+            font-size: 4rem;
+            color: #FFB7B2;
+            opacity: 0.7;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+        }
+        .flower-badge {
+            position: absolute;
+            background: white;
+            padding: 8px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            font-size: 1.2rem;
+            color: #8FB996;
+        }
+
+        /* Custom range slider */
         input[type=range] { -webkit-appearance: none; background: transparent; }
         input[type=range]::-webkit-slider-runnable-track { background: #E8E2D2; height: 8px; border-radius: 10px; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: #FFB7B2; margin-top: -6px; cursor: pointer; border: 2px solid white; }
     </style>
 </head>
 <body class="antialiased">
-
-    <!-- Chosen Palette: Sage Green, Warm Beige, Soft Pink (Spring Garden Palette) -->
-    <!-- Application Structure Plan:
-         1. Welcome Banner: Soft beige/pink gradient with a handwritten feel.
-         2. Tabbed Navigation: Rounded buttons reflecting a friendly educational environment.
-         3. Lesson Cards: Designed like storybook pages using sage green accents.
-         4. Emotional Assessment: Radar chart with soft edges to evaluate creativity and ethics.
-         5. Visual Content: Icons and labels that feel approachable rather than technical.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
     <!-- Navigation -->
     <nav class="max-w-5xl mx-auto px-4 py-6">
@@ -81,22 +101,38 @@
 
         <!-- Tab: Dashboard -->
         <div id="tab-dashboard" class="tab-content animate-fade-in">
-            <!-- Hero Banner -->
-            <div class="bg-gradient-to-r from-beige via-white to-pink-50 p-10 rounded-[40px] border-2 border-white shadow-sm mb-10 flex flex-col md:flex-row items-center gap-10">
-                <div class="md:w-3/5 text-center md:text-left">
+            <!-- Hero Banner (Updated with Storybook Illustration Look) -->
+            <div class="bg-gradient-to-r from-beige via-white to-pink-50 p-10 md:p-14 rounded-[40px] border-2 border-white shadow-sm mb-10 flex flex-col md:flex-row items-center gap-10 relative overflow-hidden">
+                <!-- Soft background accents -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-sage/5 rounded-full blur-2xl"></div>
+                
+                <div class="md:w-3/5 text-center md:text-left z-10">
                     <span class="inline-block bg-warmPink/20 text-warmPink font-bold px-4 py-1 rounded-full text-xs mb-4">Hello, Teacher!</span>
                     <h2 class="text-4xl font-extrabold text-earthy mb-4 leading-tight">선생님, 오늘도 아이들과<br><span class="text-sage">따뜻한 이야기</span>를 만들어볼까요?</h2>
-                    <p class="text-earthy/70 text-lg hand-text text-xl mb-6">AI라는 신비한 붓으로 아이들의 마음속 보물지도를 그려주세요.</p>
+                    <p class="text-earthy/70 text-lg hand-text text-xl mb-8">AI라는 신비한 붓으로 아이들의 마음속 보물지도를 그려주세요.</p>
                     <div class="flex gap-4 justify-center md:justify-start">
                         <button onclick="switchTab('lessons')" class="bg-sage text-white px-8 py-3 rounded-2xl font-bold shadow-lg shadow-sage/20 btn-hover">수업 시작하기</button>
                     </div>
                 </div>
-                <div class="md:w-2/5 flex justify-center">
+
+                <!-- Circular Illustration Frame (User's style inspiration) -->
+                <div class="md:w-2/5 flex justify-center z-10">
                     <div class="relative">
-                        <div class="w-48 h-48 bg-warmPink/30 rounded-full animate-pulse absolute -top-4 -left-4"></div>
-                        <div class="w-48 h-48 bg-sage/30 rounded-full absolute -bottom-4 -right-4"></div>
-                        <div class="w-48 h-48 bg-white rounded-3xl rotate-12 flex items-center justify-center shadow-xl border-4 border-beige overflow-hidden">
-                           <i class="fas fa-book-open text-6xl text-sage"></i>
+                        <div class="illustration-circle">
+                            <!-- Placeholder for Child's Watercolor Art -->
+                            <i class="fas fa-palette illustration-content"></i>
+                            <!-- Watercolor blobs -->
+                            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-pink-200/20 via-transparent to-sage/10 pointer-events-none"></div>
+                        </div>
+                        <!-- Decorative Badges like the user's image -->
+                        <div class="flower-badge -top-2 -right-2">
+                            <i class="fas fa-certificate text-warmPink"></i>
+                        </div>
+                        <div class="flower-badge -bottom-4 -left-4 scale-75">
+                            <i class="fas fa-leaf text-sage"></i>
+                        </div>
+                        <div class="absolute -bottom-8 right-4 hand-text text-earthy/40 text-sm">
+                            Created by Junior Artists
                         </div>
                     </div>
                 </div>
@@ -150,10 +186,7 @@
                     <button onclick="toggleGrade('mid')" id="btn-mid" class="px-8 py-2 rounded-xl font-bold transition-all text-earthy/50">중등 과정</button>
                 </div>
             </div>
-
-            <div id="lesson-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Lessons injected by JS -->
-            </div>
+            <div id="lesson-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
         </div>
 
         <!-- Tab: Evaluation -->
@@ -163,7 +196,6 @@
                     <h2 class="text-3xl font-extrabold text-earthy mb-2">아이들의 마음 성장표</h2>
                     <p class="text-earthy/60 hand-text text-xl">결과물보다 빛나는 아이들의 노력을 다각도로 살펴봅니다.</p>
                 </div>
-
                 <div class="glass-card p-10 flex flex-col md:flex-row gap-12 items-center">
                     <div class="md:w-1/2">
                         <div class="chart-container">
@@ -209,37 +241,34 @@
         <div id="tab-resources" class="tab-content hidden animate-fade-in">
             <h2 class="text-3xl font-extrabold text-earthy mb-8">수업 자료 보관함</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Resource cards... (Same as before) -->
                 <div class="bg-white p-6 rounded-3xl border-2 border-beige hover:border-warmPink transition group cursor-pointer">
                     <div class="w-14 h-14 bg-warmPink/10 text-warmPink rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:rotate-6 transition">
                         <i class="fas fa-file-signature"></i>
                     </div>
                     <h4 class="font-bold text-earthy mb-1">우리 반 AI 약속</h4>
-                    <p class="text-xs text-earthy/50 mb-4">함께 지키는 AI 윤리 선언문</p>
-                    <span class="text-xs font-bold text-warmPink"><i class="fas fa-download mr-1"></i>내려받기</span>
+                    <p class="text-xs text-earthy/50">윤리 선언문</p>
                 </div>
                 <div class="bg-white p-6 rounded-3xl border-2 border-beige hover:border-sage transition group cursor-pointer">
                     <div class="w-14 h-14 bg-sage/10 text-sage rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:rotate-6 transition">
                         <i class="fas fa-palette"></i>
                     </div>
-                    <h4 class="font-bold text-earthy mb-1">프롬프트 단어 카드</h4>
-                    <p class="text-xs text-earthy/50 mb-4">묘사를 돕는 형용사 모음집</p>
-                    <span class="text-xs font-bold text-sage"><i class="fas fa-download mr-1"></i>내려받기</span>
+                    <h4 class="font-bold text-earthy mb-1">프롬프트 카드</h4>
+                    <p class="text-xs text-earthy/50">묘사 단어집</p>
                 </div>
                 <div class="bg-white p-6 rounded-3xl border-2 border-beige hover:border-earthy transition group cursor-pointer">
                     <div class="w-14 h-14 bg-earthy/10 text-earthy rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:rotate-6 transition">
                         <i class="fas fa-map"></i>
                     </div>
-                    <h4 class="font-bold text-earthy mb-1">이야기 지도 양식</h4>
-                    <p class="text-xs text-earthy/50 mb-4">기승전결 구성을 위한 학습지</p>
-                    <span class="text-xs font-bold text-earthy"><i class="fas fa-download mr-1"></i>내려받기</span>
+                    <h4 class="font-bold text-earthy mb-1">이야기 지도</h4>
+                    <p class="text-xs text-earthy/50">구성 학습지</p>
                 </div>
                 <div class="bg-white p-6 rounded-3xl border-2 border-beige hover:border-warmPink transition group cursor-pointer">
                     <div class="w-14 h-14 bg-pink-100 text-pink-400 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:rotate-6 transition">
                         <i class="fas fa-images"></i>
                     </div>
-                    <h4 class="font-bold text-earthy mb-1">AI 명화 감상 슬라이드</h4>
-                    <p class="text-xs text-earthy/50 mb-4">화풍을 배우는 수업 도입 자료</p>
-                    <span class="text-xs font-bold text-pink-400"><i class="fas fa-download mr-1"></i>내려받기</span>
+                    <h4 class="font-bold text-earthy mb-1">화풍 감상 PPT</h4>
+                    <p class="text-xs text-earthy/50">도입 슬라이드</p>
                 </div>
             </div>
         </div>
@@ -262,9 +291,9 @@
                 { title: "우리 동네 전설 탐험", unit: "5~6학년", icon: "fa-ghost", color: "bg-earthy", desc: "전설을 각색해 한 권의 동화로 만들어요." }
             ],
             mid: [
-                { title: "셰익스피어 인 AI", unit: "문학 융합", icon: "fa-feather-pointed", color: "bg-earthy", desc: "고전 비극을 현대적 시각으로 AI와 재창작." },
-                { title: "디지털 초상권과 윤리", unit: "정보/사회", icon: "fa-user-shield", color: "bg-sage", desc: "생성 이미지의 권리와 책임에 대해 배워요." },
-                { title: "AI 스토리보드 게임", unit: "진로 체험", icon: "fa-gamepad", color: "bg-warmPink", desc: "게임 시나리오를 설계하고 비주얼을 생성합니다." }
+                { title: "셰익스피어 인 AI", unit: "문학 융합", icon: "fa-feather-pointed", color: "bg-earthy", desc: "고전 비극을 재창작합니다." },
+                { title: "디지털 윤리", unit: "정보/사회", icon: "fa-user-shield", color: "bg-sage", desc: "생성 이미지의 권리와 책임." },
+                { title: "AI 스토리보드", unit: "진로 체험", icon: "fa-gamepad", color: "bg-warmPink", desc: "게임 시나리오 설계." }
             ]
         };
 
@@ -274,8 +303,12 @@
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
             
+            // Handle Navigation styling
             document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
-            event.target.classList.add('active');
+            // If triggered by click
+            if(event && event.target.classList.contains('nav-link')) {
+                event.target.classList.add('active');
+            }
 
             if(tabId === 'evaluation') initEvalChart();
             if(tabId === 'lessons') toggleGrade('elem');
@@ -296,15 +329,12 @@
 
             grid.innerHTML = lessonData[level].map(lesson => `
                 <div class="glass-card p-8 group hover:shadow-xl transition-all duration-300 btn-hover cursor-pointer border-2 border-beige">
-                    <div class="w-16 h-16 ${lesson.color} text-white rounded-3xl flex items-center justify-center text-3xl mb-6 shadow-lg shadow-${lesson.color}/20">
+                    <div class="w-16 h-16 ${lesson.color} text-white rounded-3xl flex items-center justify-center text-3xl mb-6 shadow-lg">
                         <i class="fas ${lesson.icon}"></i>
                     </div>
                     <span class="text-xs font-bold ${lesson.color} bg-white px-3 py-1 rounded-full border border-beige shadow-sm">${lesson.unit}</span>
                     <h3 class="text-2xl font-bold text-earthy mt-4 mb-2 hand-text">${lesson.title}</h3>
                     <p class="text-sm text-earthy/60 leading-relaxed">${lesson.desc}</p>
-                    <div class="mt-8 flex items-center text-sage font-bold text-sm">
-                        수업 준비하기 <i class="fas fa-chevron-right ml-2 text-xs"></i>
-                    </div>
                 </div>
             `).join('');
         }
@@ -332,8 +362,8 @@
                         r: {
                             angleLines: { color: '#E8E2D2' },
                             grid: { color: '#E8E2D2' },
-                            suggestedMin: 0,
-                            suggestedMax: 100,
+                            suggestMin: 0,
+                            suggestMax: 100,
                             ticks: { display: false },
                             pointLabels: {
                                 font: { size: 14, weight: 'bold', family: "'Gothic A1'" },
