@@ -39,5 +39,22 @@
   </footer>
 
   <script src="./css/js/main.js"></script>
+  <script>
+    // 은현초등학교 카드 추가 (클릭 시 eunhyun.html로 이동)
+    document.addEventListener("DOMContentLoaded", () => {
+      const gallery = document.getElementById("gallery");
+      const eunhyunCard = document.createElement("div");
+      eunhyunCard.className = "book-card";
+      eunhyunCard.style.border = "2px solid #667eea";
+      eunhyunCard.innerHTML =
+        '<img src="images/eunhyun/01-bak/1.png" alt="은현초등학교 동화책">' +
+        '<h3>🏫 은현초등학교</h3>' +
+        '<p>꿈길 프로그램 · 학생 작품 11편</p>';
+      eunhyunCard.addEventListener("click", () => {
+        location.href = "eunhyun.html";
+      });
+      gallery.appendChild(eunhyunCard);
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>은현초등학교 AI 동화책 전시관</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard&display=swap" rel="stylesheet">
+  <style>
+    /* 학교별 색상 오버라이드 */
+    body { background: #f8f9ff; }
+
+    .school-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-align: center;
+      padding: 36px 20px 30px;
+      border-bottom: none;
+    }
+    .school-header .back-btn {
+      display: inline-block;
+      margin-bottom: 16px;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: white;
+      padding: 6px 18px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+    .school-header .back-btn:hover { background: rgba(255,255,255,0.35); }
+    .school-header .title-wrap { flex-direction: column; gap: 6px; }
+    .school-header h1 { color: white; font-size: 1.9rem; margin: 0; }
+    .school-header p  { color: rgba(255,255,255,0.85); margin-top: 6px; }
+
+    /* 갤러리 카드 — 더 작게 */
+    .gallery {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.2rem;
+      padding: 2rem 2.5rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .book-card img { height: 240px; }
+
+    /* 뷰어 모달 (이미지 인라인 표시) */
+    #viewer-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    #viewer-modal.open { display: flex; }
+
+    .viewer-header {
+      color: white;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .viewer-header h2 { font-size: 1.25rem; margin-bottom: 4px; }
+    .viewer-header p  { font-size: 0.82rem; opacity: 0.65; }
+
+    .viewer-body {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .v-btn {
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3);
+      color: white;
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      font-size: 1.6rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .v-btn:hover    { background: rgba(255,255,255,0.28); }
+    .v-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+    #viewer-img {
+      max-height: 78vh;
+      max-width: 68vw;
+      border-radius: 8px;
+      object-fit: contain;
+      display: block;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+      background: #111;
+    }
+
+    .viewer-counter {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.88rem;
+      text-align: center;
+      margin-top: 12px;
+      letter-spacing: 1px;
+    }
+
+    .viewer-close {
+      position: fixed;
+      top: 16px; right: 20px;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: white;
+      font-size: 1.4rem;
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+      z-index: 300;
+    }
+    .viewer-close:hover { background: rgba(255,255,255,0.3); }
+
+    .key-hint {
+      color: rgba(255,255,255,0.38);
+      font-size: 0.76rem;
+      margin-top: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<header class="school-header">
+  <div>
+    <a href="gallery.html" class="back-btn">← 전체 전시관으로</a>
+  </div>
+  <div class="title-wrap">
+    <h1>🏫 은현초등학교 동화책 전시관</h1>
+  </div>
+  <p>2025~2026 꿈길 프로그램 · AI와 함께 만든 우리들의 이야기</p>
+</header>
+
+<!-- 갤러리 -->
+<main>
+  <section id="gallery" class="gallery"></section>
+</main>
+
+<!-- 책 뷰어 모달 -->
+<div id="viewer-modal">
+  <button class="viewer-close" id="viewer-close">✕</button>
+  <div class="viewer-header">
+    <h2 id="viewer-title"></h2>
+    <p id="viewer-author"></p>
+  </div>
+  <div class="viewer-body">
+    <button class="v-btn" id="v-prev">&#8249;</button>
+    <img id="viewer-img" src="" alt="동화책 페이지">
+    <button class="v-btn" id="v-next">&#8250;</button>
+  </div>
+  <div class="viewer-counter" id="viewer-counter"></div>
+  <div class="key-hint">← → 방향키로 넘기기 &nbsp;|&nbsp; ESC 닫기</div>
+</div>
+
+<footer>
+  <p>© 2025 COALAB Lifelong Education | AI Storybook Project</p>
+</footer>
+
+<script>
+const books = [
+  { name:"박선정", title:"공정한 생활",          folder:"images/eunhyun/01-bak",   pages:11 },
+  { name:"이수억", title:"토토의 신비한 여행",    folder:"images/eunhyun/02-lee",   pages:11 },
+  { name:"유혜원", title:"공정의 저울",           folder:"images/eunhyun/03-yoo",   pages:11 },
+  { name:"윤상훈", title:"신기한 세상",           folder:"images/eunhyun/04-yoon",  pages:10 },
+  { name:"김신지", title:"도망친 당근 케이크",    folder:"images/eunhyun/05-kim",   pages:11 },
+  { name:"문준기", title:"문준기의 동화책",       folder:"images/eunhyun/06-moon",  pages:2  },
+  { name:"문하리", title:"수상한 쓰레기산",       folder:"images/eunhyun/07-mun",   pages:9  },
+  { name:"채아윤", title:"별을 구한 꼬마 너구리", folder:"images/eunhyun/08-chae",  pages:10 },
+  { name:"오시윤", title:"별빛 마을의 비밀상자",  folder:"images/eunhyun/09-oh",    pages:11 },
+  { name:"이서준", title:"공정한 달리기 대회",    folder:"images/eunhyun/10-lee2",  pages:11 },
+  { name:"김시우", title:"달빛을 먹는 아기용",    folder:"images/eunhyun/11-kim2",  pages:9  },
+];
+
+// 갤러리 카드 생성
+const gallery = document.getElementById("gallery");
+books.forEach((book, idx) => {
+  const card = document.createElement("div");
+  card.className = "book-card";
+  card.innerHTML =
+    `<img src="${book.folder}/1.png" alt="${book.title}" loading="lazy">` +
+    `<h3>${book.title}</h3>` +
+    `<p>✍️ ${book.name} · ${book.pages}페이지</p>`;
+  card.addEventListener("click", () => openBook(idx));
+  gallery.appendChild(card);
+});
+
+// 뷰어 상태
+let cur = null, curPage = 1;
+
+function openBook(idx) {
+  cur = books[idx];
+  curPage = 1;
+  document.getElementById("viewer-title").textContent = cur.title;
+  document.getElementById("viewer-author").textContent = "✍️ " + cur.name;
+  updateViewer();
+  document.getElementById("viewer-modal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeViewer() {
+  document.getElementById("viewer-modal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+function updateViewer() {
+  document.getElementById("viewer-img").src = `${cur.folder}/${curPage}.png`;
+  document.getElementById("viewer-counter").textContent = `${curPage} / ${cur.pages} 페이지`;
+  document.getElementById("v-prev").disabled = (curPage <= 1);
+  document.getElementById("v-next").disabled = (curPage >= cur.pages);
+}
+
+function changePage(d) {
+  const n = curPage + d;
+  if (n < 1 || n > cur.pages) return;
+  curPage = n;
+  updateViewer();
+}
+
+document.getElementById("v-prev").addEventListener("click", () => changePage(-1));
+document.getElementById("v-next").addEventListener("click", () => changePage(1));
+document.getElementById("viewer-close").addEventListener("click", closeViewer);
+document.getElementById("viewer-modal").addEventListener("click", function(e) {
+  if (e.target === this) closeViewer();
+});
+document.addEventListener("keydown", e => {
+  if (!document.getElementById("viewer-modal").classList.contains("open")) return;
+  if (e.key === "ArrowRight") changePage(1);
+  else if (e.key === "ArrowLeft") changePage(-1);
+  else if (e.key === "Escape") closeViewer();
+});
+</script>
+</body>
+</html>
